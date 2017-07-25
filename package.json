@@ -1,0 +1,38 @@
+{
+  "name": "belofte.js",
+  "version": "1.0.0",
+  "url": "https://github.com/ariyankhan/belofte.js",
+  "description": "A lightweight Promises/A+ compliant implementation of ECMAScript Promise API",
+  "main": "dist/belofte.js",
+  "scripts": {
+    "build": "gulp",
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariyankhan/belofte.js.git"
+  },
+  "keywords": [
+    "promise",
+    "promises-aplus",
+    "ecmascript",
+    "javascript",
+    "implementation",
+    "async"
+  ],
+  "author": "Rousan Ali",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ariyankhan/belofte.js/issues"
+  },
+  "homepage": "https://github.com/ariyankhan/belofte.js#readme",
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-header": "^1.8.9",
+    "gulp-jsbeautifier": "^2.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
+    "promises-aplus-tests": "^2.1.2"
+  }
+}
