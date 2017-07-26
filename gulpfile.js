@@ -29,7 +29,7 @@ var parts = [
 ];
 
 pkg["buildDate"] = new Date();
-pkg["name"] = pkg.name.replace(/^v/, function (found) {
+pkg["name"] = pkg.name.replace(/^b/, function (found) {
     return found.toUpperCase();
 });
 

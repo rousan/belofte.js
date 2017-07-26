@@ -6,7 +6,8 @@
   "main": "dist/belofte.js",
   "scripts": {
     "build": "gulp",
-    "test": "node test/test.js"
+    "test": "node test/test.js",
+    "pt": "npm run build && promises-aplus-tests dist/belofte.js"
   },
   "repository": {
     "type": "git",
