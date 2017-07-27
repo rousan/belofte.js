@@ -9,7 +9,7 @@
  *
  * Codebase: https://github.com/ariyankhan/belofte.js
  * Homepage: https://github.com/ariyankhan/belofte.js#readme
- * Date: Thu Jul 27 2017 05:39:24 GMT+0530 (IST)
+ * Date: Fri Jul 28 2017 03:46:09 GMT+0530 (IST)
  */
 
 (function(root, factory) {
@@ -40,17 +40,7 @@
 
     var slice = Array.prototype.slice;
 
-    var forEach = Array.prototype.forEach;
-
     var isArray = Array.isArray;
-
-    var floor = Math.floor;
-
-    var abs = Math.abs;
-
-    var max = Math.max;
-
-    var min = Math.min;
 
     var emptyFn = function() {};
 
@@ -265,11 +255,6 @@
                     resolvePromise = function(value) {
                         if (flag)
                             return;
-                        /*// Detect true cycle of thenables
-                        if (result === value) {
-                            promise._reject(new TypeError("Chaining cycle detected for thenables"));
-                            return;
-                        }*/
                         flag = true;
                         promiseResolutionProcedure(promise, value, true);
                     };
@@ -366,205 +351,229 @@
         },
 
         reject: function(reason) {
-            return new Promise(function(resolve, reject) {
-                reject(reason);
-            });
+            var promise = new Promise(emptyFn);
+            promise._reject(reason);
+            return promise;
         },
 
+
         /**
+         * Returns a promise that fulfills or rejects as soon as one of
+         * the promises in the promiseArray fulfills or rejects, with the
+         * value or reason from that promise.
          *
          * @param promiseArray array or array-like object
          * @returns {Promise}
          */
         race: function(promiseArray) {
-            if (promiseArray === undefined || promiseArray === null)
-                return new Promise(function(resolve, reject) {
-                    runAsync(reject, undefined, TypeError("First argument of Promise.race can not be undefined or null"));
-                });
-            var length,
+            var outP = new Promise(emptyFn),
+                length,
+                fn,
+                i = 0,
                 isSettled = false;
 
-            length = Number(promiseArray.length);
-            length = length !== length ? 0 : length;
-            length = (length < 0 ? -1 : 1) * floor(abs(length));
-            length = max(length, 0);
+            if (isNullOrUndefined(promiseArray)) {
+                outP._reject(new TypeError("First argument of Promise.race can not be undefined or null"));
+                return outP;
+            }
 
-            return new Promise(function(resolve, reject) {
-                var fn,
-                    i = 0;
-                fn = function(promise) {
-                    var temp1,
-                        temp2;
-                    if (isPromise(promise)) {
-                        if (isFulfilledPromise(promise)) {
-                            if (!isSettled) {
-                                isSettled = true;
-                                runAsync(function() {
-                                    resolve(promise._value);
-                                });
-                            }
-                        } else if (isRejectedPromise(promise)) {
-                            if (!isSettled) {
-                                isSettled = true;
-                                runAsync(function() {
-                                    reject(promise._reason);
-                                });
-                            }
-                        } else if (isPendingPromise(promise)) {
-                            temp1 = promise._resolve;
-                            temp2 = promise._reject;
-                            defineProperties(promise, {
-                                _resolve: {
-                                    value: (function(value) {
-                                        temp1(value);
-                                        if (!isSettled) {
-                                            isSettled = true;
-                                            resolve(value);
-                                        }
-                                    }).bind(promise)
-                                },
-                                _reject: {
-                                    value: (function(reason) {
-                                        temp2(reason);
-                                        if (!isSettled) {
-                                            isSettled = true;
-                                            reject(reason);
-                                        }
-                                    }).bind(promise)
-                                }
-                            });
-                        }
-                    } else if (isThenable(promise)) {
-                        runAsync(function() {
-                            try {
-                                promise.then(function(value) {
-                                    if (!isSettled) {
-                                        isSettled = true;
-                                        resolve(value);
-                                    }
-                                }, function(reason) {
-                                    if (!isSettled) {
-                                        isSettled = true;
-                                        reject(reason);
-                                    }
-                                });
-                            } catch (e) {
-                                reject(e);
-                            }
-                        });
-                    } else {
+            promiseArray = slice.call(promiseArray);
+            length = promiseArray.length;
+
+            fn = function(promise) {
+                var temp1,
+                    temp2;
+                if (isPromise(promise)) {
+                    if (isFulfilledPromise(promise)) {
                         if (!isSettled) {
                             isSettled = true;
                             runAsync(function() {
-                                resolve(promise);
+                                outP._resolve(promise._value);
                             });
                         }
+                    } else if (isRejectedPromise(promise)) {
+                        if (!isSettled) {
+                            isSettled = true;
+                            runAsync(function() {
+                                outP._reject(promise._reason);
+                            });
+                        }
+                    } else if (isPendingPromise(promise)) {
+                        temp1 = promise._resolve;
+                        temp2 = promise._reject;
+                        defineProperties(promise, {
+                            _resolve: {
+                                value: (function(value) {
+                                    temp1.call(this, value);
+                                    if (!isSettled) {
+                                        isSettled = true;
+                                        outP._resolve(value);
+                                    }
+                                }).bind(promise)
+                            },
+                            _reject: {
+                                value: (function(reason) {
+                                    temp2.call(this, reason);
+                                    if (!isSettled) {
+                                        isSettled = true;
+                                        outP._reject(reason);
+                                    }
+                                }).bind(promise)
+                            }
+                        });
                     }
-                };
-                for (; i < length; ++i) {
-                    fn(promiseArray[i]);
+                } else if (isObject(promise) && isCallable(promise.then)) {
+                    runAsync(function() {
+                        try {
+                            promise.then(function(value) {
+                                if (!isSettled) {
+                                    isSettled = true;
+                                    promiseResolutionProcedure(outP, value, true);
+                                }
+                            }, function(reason) {
+                                if (!isSettled) {
+                                    isSettled = true;
+                                    outP._reject(reason);
+                                }
+                            });
+                        } catch (e) {
+                            if (!isSettled) {
+                                isSettled = true;
+                                outP._reject(e);
+                            }
+                        }
+                    });
+                } else {
+                    if (!isSettled) {
+                        isSettled = true;
+                        runAsync(function() {
+                            outP._resolve(promise);
+                        });
+                    }
                 }
-            });
+            };
+            for (; i < length; ++i) {
+                fn(promiseArray[i]);
+            }
+
+            return outP;
         },
 
-
         /**
+         * Returns a single Promise that resolves when all of the promises in the promiseArray argument
+         * have resolved or when the promiseArray argument contains no promises.
+         * It rejects with the reason of the first promise that rejects.
          *
          * @param promiseArray array or array-like object
          * @returns {Promise}
          */
         all: function(promiseArray) {
-            if (promiseArray === undefined || promiseArray === null)
-                return new Promise(function(resolve, reject) {
-                    runAsync(reject, undefined, TypeError("First argument of Promise.all can not be undefined or null"));
-                });
-            var counter = 0,
+            var outP = new Promise(emptyFn),
+                counter = 0,
                 length,
+                fn,
+                i = 0,
                 values;
 
-            length = Number(promiseArray.length);
-            length = length !== length ? 0 : length;
-            length = (length < 0 ? -1 : 1) * floor(abs(length));
-            length = max(length, 0);
+            if (isNullOrUndefined(promiseArray)) {
+                outP._reject(new TypeError("First argument of Promise.all can not be undefined or null"));
+                return outP;
+            }
 
+            promiseArray = slice.call(promiseArray);
+            length = promiseArray.length;
             values = new Array(length);
 
-            return new Promise(function(resolve, reject) {
-                var fn,
-                    i = 0;
-                if (length === 0)
-                    resolve(values);
-                else {
-                    fn = function(promise, index) {
-                        var temp1,
-                            temp2;
-                        if (isPromise(promise)) {
-                            if (isFulfilledPromise(promise)) {
-                                values[index] = promise._value;
-                                counter++;
-                                if (counter === length) {
-                                    runAsync(function() {
-                                        resolve(values);
-                                    });
-                                }
-                            } else if (isRejectedPromise(promise)) {
-                                runAsync(function() {
-                                    reject(promise._reason);
-                                });
-                            } else if (isPendingPromise(promise)) {
-                                temp1 = promise._resolve;
-                                temp2 = promise._reject;
-                                defineProperties(promise, {
-                                    _resolve: {
+            if (length === 0) {
+                outP._resolve(values);
+                return outP;
+            }
+
+            fn = function(promise, index) {
+                var temp1,
+                    temp2;
+                if (isPromise(promise)) {
+                    if (isFulfilledPromise(promise)) {
+                        values[index] = promise._value;
+                        counter++;
+                        if (counter === length) {
+                            runAsync(function() {
+                                outP._resolve(values);
+                            });
+                        }
+                    } else if (isRejectedPromise(promise)) {
+                        runAsync(function() {
+                            outP._reject(promise._reason);
+                        });
+                    } else if (isPendingPromise(promise)) {
+                        temp1 = promise._resolve;
+                        temp2 = promise._reject;
+                        defineProperties(promise, {
+                            _resolve: {
+                                value: (function(value) {
+                                    temp1.call(this, value);
+                                    values[index] = value;
+                                    counter++;
+                                    if (counter === length) {
+                                        outP._resolve(values);
+                                    }
+                                }).bind(promise)
+                            },
+                            _reject: {
+                                value: (function(reason) {
+                                    temp2.call(this, reason);
+                                    outP._reject(reason);
+                                }).bind(promise)
+                            }
+                        });
+                    }
+                } else if (isObject(promise) && isCallable(promise.then)) {
+                    runAsync(function() {
+                        var flag = false;
+                        try {
+                            promise.then(function(value) {
+                                if (!flag) {
+                                    flag = true;
+                                    var temp1 = outP._resolve;
+                                    defineProperty(outP, "_resolve", {
                                         value: (function(value) {
-                                            temp1(value);
                                             values[index] = value;
                                             counter++;
                                             if (counter === length) {
-                                                resolve(values);
+                                                temp1.call(this, values);
                                             }
-                                        }).bind(promise)
-                                    },
-                                    _reject: {
-                                        value: (function(reason) {
-                                            temp2(reason);
-                                            reject(reason);
-                                        }).bind(promise)
-                                    }
-                                });
-                            }
-                        } else if (isThenable(promise)) {
-                            runAsync(function() {
-                                try {
-                                    promise.then(function(value) {
-                                        values[index] = value;
-                                        counter++;
-                                        if (counter === length) {
-                                            resolve(values);
-                                        }
-                                    }, function(reason) {
-                                        // If the returned promise is already rejected, then it does nothing
-                                        reject(reason);
+                                        }).bind(outP)
                                     });
-                                } catch (e) {
-                                    reject(e);
+                                    promiseResolutionProcedure(outP, value, true);
+                                }
+                            }, function(reason) {
+                                if (!flag) {
+                                    flag = true;
+                                    outP._reject(reason);
                                 }
                             });
-                        } else {
-                            values[index] = promise;
-                            counter++;
-                            if (counter === length) {
-                                runAsync(function() {
-                                    resolve(values);
-                                });
+                        } catch (e) {
+                            if (!flag) {
+                                flag = true;
+                                outP._reject(e);
                             }
                         }
-                    };
-                    for (; i < length; ++i) {
-                        fn(promiseArray[i], i);
+                    });
+                } else {
+                    values[index] = promise;
+                    counter++;
+                    if (counter === length) {
+                        runAsync(function() {
+                            outP._resolve(values);
+                        });
                     }
                 }
-            });
+            };
+            for (; i < length; ++i) {
+                fn(promiseArray[i], i);
+            }
+
+            return outP;
         },
 
         defer: function() {
@@ -673,11 +682,23 @@
             return promise._state;
         },
 
-        resolve: function() {
+        getValue: function(promise) {
+            if (!isPromise(promise))
+                return null;
+            return promise._value;
+        },
+
+        getReason: function(promise) {
+            if (!isPromise(promise))
+                return null;
+            return promise._reason;
+        },
+
+        resolve: function(value) {
             return Promise.resolve(value);
         },
 
-        reject: function() {
+        reject: function(reason) {
             return Promise.reject(reason);
         },
 
@@ -699,9 +720,7 @@
             return new Deferred();
         },
 
-        nextTick: function(fn) {
-            nextTick(fn);
-        }
+        runAsync: runAsync
 
     });
 

@@ -3,13 +3,23 @@
 try {
 
 
-    var p = new Promise(function (r, rr) {
-        console.log("F");
-        r(3);
+    var promise = new Belofte.Promise(function (resolve, reject) {
+        Belofte.runAsync(resolve, undefined, 121);
     });
 
-
-    console.log(p);
+    promise.then(function (value) {
+        console.log(value);
+        return Belofte.resolve(1000);
+    }).then(function (value) {
+        console.log(value);
+        var deferred = Belofte.defer();
+        Belofte.runAsync(function () {
+            deferred.resolve(122);
+        });
+        return deferred.promise;
+    }).catch(function (err) {
+        console.log(err);
+    });
 
 } catch (e) {
     console.log(e);

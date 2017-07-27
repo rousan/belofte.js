@@ -2,10 +2,20 @@
 
 var Belofte = require("../dist/belofte");
 
-var Promise = global.Promise;
-
-var d = new Promise(function (r, rr) {
-   r(Promise.resolve(3));
+var promise = new Belofte.Promise(function (resolve, reject) {
+   Belofte.runAsync(resolve, undefined, 121);
 });
 
-console.log(d);
+promise.then(function (value) {
+   console.log(value);
+   return Belofte.resolve(1000);
+}).then(function (value) {
+    console.log(value);
+   var deferred = Belofte.defer();
+   Belofte.runAsync(function () {
+      deferred.resolve(122);
+   });
+   return deferred.promise;
+}).catch(function (err) {
+    console.log(err);
+});

@@ -6,6 +6,10 @@ Here the `Belofte` is an Afrikaans word, It means `Promise`.
 This library is very useful for old browsers or old Javascript engines where
 native `Promise` API is not available.
 
+<a href="https://promisesaplus.com/">
+    <img src="https://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ logo"
+         title="Promises/A+ 1.0 compliant" align="right" />
+</a>
 
 ## Install
 
@@ -28,6 +32,48 @@ For VanillaJS, just insert it into your HTML page:
 ## Test
 
 `npm test`
+
+## Run Promises/A+ Test Suits
+
+`npm run pt`
+
+## Documentation
+
+* [Getting Started](#getting-started)
+* [Classes](#classes)
+    * [`Promise`](#promise)
+    * [`Deferred`](#deferred)
+* [`Belofte` Global](#vector-global)
+
+### Getting Started
+
+```javascript
+var Belofte = require("belofte");
+
+var promise = new Belofte.Promise(function (resolve, reject) {
+   Belofte.runAsync(resolve, undefined, 121);
+});
+
+promise.then(function (value) {
+   console.log(value);
+   return Belofte.resolve(1000);
+}).then(function (value) {
+    console.log(value);
+   var deferred = Belofte.defer();
+   Belofte.runAsync(function () {
+      deferred.resolve(122);
+   });
+   return deferred.promise;
+}).catch(function (err) {
+    console.log(err);
+});
+```
+
+[Here](https://jsfiddle.net/ariyankhan/f9yfwohw/) is the fiddling.
+
+Test all the following code snippets [Here](https://jsfiddle.net/ariyankhan/zdw1z7ns/). Just
+copy and paste into the fiddling editor and run it. All the necessary files are already
+attached.
 
 ## Contributors
 
