@@ -219,9 +219,13 @@
             promise._reject(new TypeError("Chaining cycle detected for promise"));
         } else if (isPromise(result)) {
             if (isFulfilledPromise(result)) {
-                promise._resolve(result._value);
+                runAsync(function () {
+                    promise._resolve(result._value);
+                });
             } else if (isRejectedPromise(result)) {
-                promise._reject(result._reason);
+                runAsync(function () {
+                    promise._reject(result._reason);
+                });
             } else if (isPendingPromise(result)) {
                 temp1 = result._resolve;
                 temp2 = result._reject;
@@ -248,13 +252,13 @@
                     resolvePromise = function (value) {
                         if (flag)
                             return;
-                        // Detect true cycle of thenables
+                        /*// Detect true cycle of thenables
                         if (result === value) {
                             promise._reject(new TypeError("Chaining cycle detected for thenables"));
                             return;
-                        }
+                        }*/
                         flag = true;
-                        promiseResolutionProcedure(promise, value);
+                        promiseResolutionProcedure(promise, value, true);
                     };
                     rejectPromise = function (reason) {
                         if (flag)
@@ -571,7 +575,7 @@
                 var result;
                 try {
                     result = onFulfilled(value);
-                    promiseResolutionProcedure(chainedPromise, result);
+                    promiseResolutionProcedure(chainedPromise, result, true);
                 } catch (e) {
                     chainedPromise._reject(e);
                 }
@@ -581,7 +585,7 @@
                 var result;
                 try {
                     result = onRejected(reason);
-                    promiseResolutionProcedure(chainedPromise, result);
+                    promiseResolutionProcedure(chainedPromise, result, true);
                 } catch (e) {
                     chainedPromise._reject(e);
                 }
