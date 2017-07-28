@@ -47,9 +47,9 @@ For VanillaJS, just insert it into your HTML page:
 
 * [Getting Started](#getting-started)
 * [Classes](#classes)
-    * [`Promise`](#promise)
-    * [`Deferred`](#deferred)
-* [`Belofte` Global](#vector-global)
+    * [`Belofte.Promise`](#beloftepromise)
+    * [`Belofte.Deferred`](#beloftedeferred)
+* [`Belofte` Global](#belofte-global)
 
 ### Getting Started
 
