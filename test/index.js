@@ -1,7 +1,4 @@
-
-
 try {
-
 
     var promise = new Belofte.Promise(function (resolve, reject) {
         Belofte.runAsync(resolve, undefined, 121);
