@@ -566,7 +566,6 @@
         }
     });
 
-
     Belofte.extend(Promise.prototype, {
 
         then: function (onFulfilled, onRejected) {
@@ -629,7 +628,6 @@
         }
 
     });
-
 
     var Deferred = function Deferred() {
         this.promise = new Promise(emptyFn);

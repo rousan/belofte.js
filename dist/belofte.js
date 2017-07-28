@@ -1,5 +1,5 @@
 /*!
- * Belofte.js v1.0.0
+ * Belofte.js v1.2.0
  * A lightweight Promises/A+ compliant implementation of ECMAScript Promise API.
  * Here the Belofte is an Afrikaans word, It means Promise.
  * This library is very useful for old browsers or old Javascript engines where
@@ -9,7 +9,7 @@
  *
  * Codebase: https://github.com/ariyankhan/belofte.js
  * Homepage: https://github.com/ariyankhan/belofte.js#readme
- * Date: Fri Jul 28 2017 03:46:09 GMT+0530 (IST)
+ * Date: Fri Jul 28 2017 15:12:17 GMT+0530 (IST)
  */
 
 (function(root, factory) {
@@ -581,7 +581,6 @@
         }
     });
 
-
     Belofte.extend(Promise.prototype, {
 
         then: function(onFulfilled, onRejected) {
@@ -644,7 +643,6 @@
         }
 
     });
-
 
     var Deferred = function Deferred() {
         this.promise = new Promise(emptyFn);
