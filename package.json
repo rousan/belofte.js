@@ -1,13 +1,13 @@
 {
   "name": "belofte.js",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "url": "https://github.com/ariyankhan/belofte.js",
   "description": "A lightweight Promises/A+ compliant implementation of ECMAScript Promise API",
   "main": "dist/belofte.js",
   "scripts": {
     "build": "gulp",
     "test": "node test/test.js",
-    "pt": "npm run build && promises-aplus-tests dist/belofte.js"
+    "pt": "promises-aplus-tests test/adapter.js"
   },
   "repository": {
     "type": "git",
