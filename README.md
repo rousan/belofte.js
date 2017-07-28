@@ -15,9 +15,15 @@ native `Promise` API is not available.
 
 If you use NPM, run the following command, Otherwise download the latest release from Github. 
 It uses `UMD` module definition i.e. it supports AMD, CommonJS, and VanillaJS module loader 
-environments. In VanillaJS, a `Belofte` global object is exported:
+environments. In VanillaJS, a `Belofte` global object is exported.
 
 `npm install belofte.js`
+
+For NodeJS environment:
+
+```javascript
+var Belofte = require("belofte.js");
+```
 
 For VanillaJS, just insert it into your HTML page:
 
@@ -27,7 +33,7 @@ For VanillaJS, just insert it into your HTML page:
 
 ## Build
 
-`npm run build`     
+`npm run build`
      
 ## Test
 
@@ -48,7 +54,7 @@ For VanillaJS, just insert it into your HTML page:
 ### Getting Started
 
 ```javascript
-var Belofte = require("belofte");
+var Belofte = require("belofte.js");
 
 var promise = new Belofte.Promise(function (resolve, reject) {
    Belofte.runAsync(resolve, undefined, 121);
@@ -58,7 +64,7 @@ promise.then(function (value) {
    console.log(value);
    return Belofte.resolve(1000);
 }).then(function (value) {
-    console.log(value);
+   console.log(value);
    var deferred = Belofte.defer();
    Belofte.runAsync(function () {
       deferred.resolve(122);
@@ -94,7 +100,7 @@ var promise = Belofte.Promise.resolve(value);
 
 Where,
 
-* `value` : any Javascript or a thenable or a promise.
+* `value` : any Javascript value or a thenable or a promise.
 
 It returns a resolved promise.
 
@@ -110,7 +116,7 @@ var promise = Belofte.Promise.reject(reason);
 
 Where,
 
-* `reason` : any `Error` object
+* `reason` : any Javascript value
 
 It returns a rejected promise.
 
@@ -130,7 +136,7 @@ Where,
 
 * `promiseArray` : any array or array-like object of promises
 
-It returns a promise.
+It returns a pending promise.
 
 ##### `all()`
 
@@ -157,8 +163,7 @@ Returns a new object of `Belofte.Deferred` class.
 ##### `prototype.then()`
 
 Appends fulfillment and rejection handlers to the promise, and returns a
-new promise resolving to the return value of the called handler, 
-or to its original settled value if the promise was not handled.
+new promise resolving to the return value of the called handler.
 
 The syntax is:
 
@@ -229,39 +234,43 @@ Belofte.Deferred.prototype.reject(reason);
 
 Where,
 
-* `reason` : Any Javascript value
+* `reason` : any Javascript value
 
 ### `Belofte` Global
 
-##### `isPromise()`
+#### `isPromise()`
 
-Checks whether or not the specified value is an promise.
+Checks whether or not the specified value is a promise.
 
-##### `isPending()`
+#### `isPending()`
 
 Checks whether or not the specified promise is in pending state.
 
-##### `isFulfilled()`
+#### `isFulfilled()`
 
-Checks whether or not the specified promise is in fulfilled state.
+Checks whether or not the specified promise is fulfilled.
 
-##### `isRejected()`
+#### `isRejected()`
 
-Checks whether or not the specified promise is in rejected state.
+Checks whether or not the specified promise is rejected.
 
-##### `isSettled()`
+#### `isSettled()`
 
-Checks whether or not the specified promise is in settled(fulfilled or rejected).
+Checks whether or not the specified promise is settled (i.e. fulfilled or rejected).
 
-##### `getState()`
+#### `getState()`
 
 Returns the current state of the specified promise.
 
-##### `getValue()`
+#### `getReason()`
 
-Returns the current value of the specified resolved promise.
+Returns the current reason of the specified rejected promise.
 
-##### `resolve()`
+#### `getValue()`
+
+Returns the current value of the specified fulfilled promise.
+
+#### `resolve()`
 
 Equivalent to `Belofte.Promise.resolve(value)`
 
@@ -287,7 +296,7 @@ Returns a new object of `Belofte.Deferred` class.
 
 ##### `runAsync()`
 
-Runs the given task asynchronously i.e. push the specified task to `EventQueuej`
+Runs the given task asynchronously i.e. push the specified task to `EventQueue`.
 
 The syntax is:
 
@@ -297,9 +306,9 @@ Belofte.runAsync(fn, thisArg /* arguments */);
 
 Where,
 
-* `fn` : any Javascript functions that will be called with the passed arguments.
+* `fn` : any Javascript functions that will be called asynchronously,
 
-* `thisArg` : the `this` value of the `fn` function  
+* `thisArg` : the `this` value of the `fn` function,
 
 * `arguments`: these are passed to `fn` function as arguments
 
