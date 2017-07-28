@@ -100,7 +100,7 @@ var promise = Belofte.Promise.resolve(value);
 
 Where,
 
-* `value` : any Javascript value or a thenable or a promise.
+* `value` : any Javascript value or a thenable or a promise object
 
 It returns a resolved promise.
 
@@ -262,46 +262,46 @@ Checks whether or not the specified promise is settled (i.e. fulfilled or reject
 
 Returns the current state of the specified promise.
 
-#### `getReason()`
-
-Returns the current reason of the specified rejected promise.
-
 #### `getValue()`
 
 Returns the current value of the specified fulfilled promise.
+
+#### `getReason()`
+
+Returns the current reason of the specified rejected promise.
 
 #### `resolve()`
 
 Equivalent to `Belofte.Promise.resolve(value)`
 
-##### `reject()`
+#### `reject()`
 
 Equivalent to `Belofte.Promise.reject(reason)`
 
-##### `defer()`
+#### `defer()`
 
 Returns a new object of `Belofte.Deferred` class.
 
-##### `resolved()`
+#### `resolved()`
 
 Equivalent to `Belofte.Promise.resolve(value)`.
 
-##### `rejected()`
+#### `rejected()`
 
 Equivalent to `Belofte.Promise.reject(value)`.
 
-##### `deferred()`
+#### `deferred()`
 
 Returns a new object of `Belofte.Deferred` class.
 
-##### `runAsync()`
+#### `runAsync()`
 
 Runs the given task asynchronously i.e. push the specified task to `EventQueue`.
 
 The syntax is:
 
 ```javascript
-Belofte.runAsync(fn, thisArg /* arguments */);
+Belofte.runAsync(fn, thisArg /* rest arguments */);
 ```
 
 Where,
