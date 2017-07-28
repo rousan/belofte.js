@@ -1,3 +1,8 @@
+<a href="https://promisesaplus.com/">
+    <img src="https://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ logo"
+         title="Promises/A+ 1.0 compliant" align="right" />
+</a>
+
 # Belofte.js
 
 `Belofte.js` is a lightweight Promises/A+ compliant implementation of ECMAScript Promise API.
@@ -5,11 +10,6 @@ Here the `Belofte` is an Afrikaans word, It means `Promise`.
 
 This library is very useful for old browsers or old Javascript engines where
 native `Promise` API is not available.
-
-<a href="https://promisesaplus.com/">
-    <img src="https://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ logo"
-         title="Promises/A+ 1.0 compliant" align="right" />
-</a>
 
 ## Install
 
