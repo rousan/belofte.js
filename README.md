@@ -238,6 +238,26 @@ Where,
 
 ### `Belofte` Global
 
+#### `extend()`
+
+This method copies all own properties(enumerable and non-enumerable)
+carefully with descriptors from source objects to target object and merges them.
+It does not make deep copy of properties.
+
+The syntax is:
+
+```javascript
+var target = Belofte.extend(target, ...sources);
+```
+
+Where,
+
+* `target` : target object,
+
+* `sources` : source objects,
+
+It returns the target object.
+
 #### `isPromise()`
 
 Checks whether or not the specified value is a promise.
