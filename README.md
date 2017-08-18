@@ -331,7 +331,7 @@ Where,
 * `thisArg` : the `this` value of the `fn` function,
 
 * `arguments`: these are passed to `fn` function as arguments
-
+ 
 
 ## Contributors
 
