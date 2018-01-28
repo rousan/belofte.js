@@ -16,6 +16,7 @@ A lightweight Promises/A+ compliant implementation of ECMAScript Promise API
 [![Build Status](https://travis-ci.org/rousan/belofte.js.svg?branch=develop)](https://travis-ci.org/rousan/belofte.js)
 [![NPM version](https://img.shields.io/npm/v/belofte.js.svg)](https://www.npmjs.com/package/belofte.js)
 [![NPM total downloads](https://img.shields.io/npm/dt/belofte.js.svg)](https://www.npmjs.com/package/belofte.js)
+[![Contributors](https://img.shields.io/github/contributors/rousan/belofte.js.svg)](https://github.com/rousan/belofte.js/graphs/contributors)
 [![License](https://img.shields.io/github/license/rousan/belofte.js.svg)](https://github.com/rousan/belofte.js/blob/master/LICENSE)
 
 `BelofteJS` is a lightweight Promises/A+ compliant implementation of ECMAScript Promise API.

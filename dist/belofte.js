@@ -8,8 +8,8 @@
  * @license Copyright (c) 2017-2018 Rousan Ali, MIT License
  *
  * Codebase: https://github.com/rousan/belofte.js
- * Homepage: https://rousan.io/belofte.js
- * Date: Sun Jan 28 2018 18:13:07 GMT+0530 (IST)
+ * Homepage: https://github.com/rousan/belofte.js#readme
+ * Date: Sun Jan 28 2018 20:33:24 GMT+0530 (IST)
  */
 (function(root, factory) {
 
