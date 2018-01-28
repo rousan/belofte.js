@@ -1,1 +1,4 @@
 theme: jekyll-theme-cayman
+title: "BelofteJS"
+description: "A lightweight Promises/A+ compliant implementation of ECMAScript Promise API"
+show_downloads: "true"
