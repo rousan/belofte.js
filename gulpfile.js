@@ -1,4 +1,3 @@
-
 var gulp = require("gulp"),
     gulpUglify = require("gulp-uglify"),
     gulpRename = require("gulp-rename"),
@@ -15,7 +14,7 @@ var header = [
     "* This library is very useful for old browsers or old Javascript engines where",
     "* native Promise API is not available.",
     "*",
-    "* @license Copyright (c) 2017 Rousan Ali, <%= pkg.license %> License",
+    "* @license Copyright (c) 2017-2018 Rousan Ali, <%= pkg.license %> License",
     "*",
     "* Codebase: <%= pkg.url %>",
     "* Homepage: <%= pkg.homepage %>",
