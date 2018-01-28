@@ -1,17 +1,16 @@
 /*!
- * Belofte.js v1.2.0
+ * Belofte.js v1.3.0
  * A lightweight Promises/A+ compliant implementation of ECMAScript Promise API.
  * Here the Belofte is an Afrikaans word, It means Promise.
  * This library is very useful for old browsers or old Javascript engines where
  * native Promise API is not available.
  *
- * @license Copyright (c) 2017 Rousan Ali, MIT License
+ * @license Copyright (c) 2017-2018 Rousan Ali, MIT License
  *
- * Codebase: https://github.com/ariyankhan/belofte.js
- * Homepage: https://github.com/ariyankhan/belofte.js#readme
- * Date: Fri Jul 28 2017 15:12:17 GMT+0530 (IST)
+ * Codebase: https://github.com/rousan/belofte.js
+ * Homepage: https://github.com/rousan/belofte.js#readme
+ * Date: Sun Jan 28 2018 20:33:24 GMT+0530 (IST)
  */
-
 (function(root, factory) {
 
     "use strict";
