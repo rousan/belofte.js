@@ -5,9 +5,9 @@
         <img src="https://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ logo" title="Promises/A+ 1.0 compliant">
     </a>
 </h1>
-<h2 align="center">
+<h3 align="center">
 BelofteJS
-</h2>
+</h3>
 <p align="center">
 A lightweight Promises/A+ compliant implementation of ECMAScript Promise API
 </p>
