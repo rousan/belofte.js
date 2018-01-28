@@ -1,11 +1,24 @@
-<a href="https://promisesaplus.com/">
-    <img src="https://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ logo"
-         title="Promises/A+ 1.0 compliant" align="right" />
-</a>
+<h3 align="center">
+    <br>
+	<br>
+    <a href="https://promisesaplus.com/">
+        <img src="https://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ logo" title="Promises/A+ 1.0 compliant">
+    </a>
+</h1>
+<h3 align="center">
+BelofteJS
+</h3>
+<p align="center">
+A lightweight Promises/A+ compliant implementation of ECMAScript Promise API
+</p>
+<br>
 
-# Belofte.js
+[![Build Status](https://travis-ci.org/rousan/belofte.js.svg?branch=develop)](https://travis-ci.org/rousan/belofte.js)
+[![NPM version](https://img.shields.io/npm/v/belofte.js.svg)](https://www.npmjs.com/package/belofte.js)
+[![NPM total downloads](https://img.shields.io/npm/dt/belofte.js.svg)](https://www.npmjs.com/package/belofte.js)
+[![License](https://img.shields.io/github/license/rousan/belofte.js.svg)](https://github.com/rousan/belofte.js/blob/master/LICENSE)
 
-`Belofte.js` is a lightweight Promises/A+ compliant implementation of ECMAScript Promise API.
+`BelofteJS` is a lightweight Promises/A+ compliant implementation of ECMAScript Promise API.
 Here the `Belofte` is an Afrikaans word, It means `Promise`.
 
 This library is very useful for old browsers or old Javascript engines where
@@ -13,45 +26,23 @@ native `Promise` API is not available.
 
 ## Install
 
-If you use NPM, run the following command, Otherwise download the latest release from Github. 
-It uses `UMD` module definition i.e. it supports AMD, CommonJS, and VanillaJS module loader 
-environments. In VanillaJS, a `Belofte` global object is exported.
+### NPM
 
-`npm install belofte.js`
+Install it from `npm`:
 
-For NodeJS environment:
-
-```javascript
-var Belofte = require("belofte.js");
+```bash
+$ npm install --save belofte.js
 ```
 
-For VanillaJS, just insert it into your HTML page:
+### CDN
 
-```haml
-<script src="belofte.min.js"></script>
+If you prefer CDN, then just insert it into your HTML page:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/belofte.js/dist/belofte.min.js"></script>
 ```
 
-## Build
-
-`npm run build`
-     
-## Test
-
-`npm test`
-
-## Run Promises/A+ Test Suits
-
-`npm run pt`
-
-## Documentation
-
-* [Getting Started](#getting-started)
-* [Classes](#classes)
-    * [`Belofte.Promise`](#beloftepromise)
-    * [`Belofte.Deferred`](#beloftedeferred)
-* [`Belofte` Global](#belofte-global)
-
-### Getting Started
+## Getting Started
 
 ```javascript
 var Belofte = require("belofte.js");
@@ -75,7 +66,14 @@ promise.then(function (value) {
 });
 ```
 
-[Here](https://jsfiddle.net/ariyankhan/f9yfwohw/) is the fiddling.
+[Here](https://jsfiddle.net/rousan/f9yfwohw/) is the `jsfiddle` link.
+
+## API
+
+* [Classes](#classes)
+    * [`Belofte.Promise`](#beloftepromise)
+    * [`Belofte.Deferred`](#beloftedeferred)
+* [`Belofte` Global](#belofte-global)
 
 ### Classes
 
@@ -331,34 +329,25 @@ Where,
 * `thisArg` : the `this` value of the `fn` function,
 
 * `arguments`: these are passed to `fn` function as arguments
- 
 
-## Contributors
+## Contributing
 
-   * [Rousan Ali](https://github.com/ariyankhan)
-   
-   Contributions are always welcome.
-   
-## License
+Your PRs and stars are always welcome.
 
-MIT License
+Please, try to follow:
 
-Copyright (c) 2017 Rousan Ali
+* Clone the repository.
+* Checkout `develop` branch.
+* Install dependencies.
+* Add your new features or fixes.
+* Run Promises/A+ test suites.
+* Build the project.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+```sh
+$ git clone https://github.com/rousan/belofte.js.git
+$ cd belofte.js
+$ git checkout develop
+$ npm i
+$ npm test
+$ npm run build
+```
