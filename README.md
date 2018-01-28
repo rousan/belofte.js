@@ -1,10 +1,17 @@
 <h3 align="center">
-    <br/>
-	<br/>
+    <br>
+	<br>
     <a href="https://promisesaplus.com/">
         <img src="https://promisesaplus.com/assets/logo-small.png" alt="Promises/A+ logo" title="Promises/A+ 1.0 compliant">
     </a>
-</h1>
+</h3>
+<h3 align="center">
+BelofteJS
+</h3>
+<p align="center">
+A lightweight Promises/A+ compliant implementation of ECMAScript Promise API
+</p>
+<br>
 
 [![Build Status](https://travis-ci.org/rousan/belofte.js.svg?branch=develop)](https://travis-ci.org/rousan/belofte.js)
 [![NPM version](https://img.shields.io/npm/v/belofte.js.svg)](https://www.npmjs.com/package/belofte.js)
